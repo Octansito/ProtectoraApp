@@ -31,7 +31,6 @@ import kotlinx.coroutines.delay
  */
 //Contempla la lógica
 @Composable
-
 fun SplashScreen(navController: NavController){
     //Función en segundo plano
     LaunchedEffect(key1 = true) {
