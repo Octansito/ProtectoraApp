@@ -42,8 +42,9 @@ fun SplashScreen(navController: NavController){
         //Mapeamos la pantalla MainScreen para dirigirnos a ella
         navController.navigate(AppScreens.MainScreen.route)
     }
-
+    //Llamamos al método Splash
     Splash()
+
 }
 //Función que contiene el diseño
 @Composable
