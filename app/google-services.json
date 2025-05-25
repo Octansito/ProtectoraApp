@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "179961708685",
+    "project_id": "protectoraapp-cfe03",
+    "storage_bucket": "protectoraapp-cfe03.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:179961708685:android:ee0686812047c4cf5ea2c4",
+        "android_client_info": {
+          "package_name": "com.example.protectora"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAIi2F3rovW-CzuDKDGINEn4DKymEAH5g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

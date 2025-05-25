@@ -40,12 +40,13 @@ fun SplashScreen(navController: NavController){
         //Evitamos que podamos retroceder a la pantalla de Splash
         navController.popBackStack()
         //Mapeamos la pantalla MainScreen para dirigirnos a ella
-        navController.navigate(AppScreens.MainScreen.route)
+        navController.navigate(AppScreens.LoginScreen.route)
     }
     //Llamamos al método Splash
     Splash()
 
 }
+
 //Función que contiene el diseño
 @Composable
 fun Splash(){
@@ -53,7 +54,7 @@ fun Splash(){
         modifier=Modifier.fillMaxSize()
     ){
         Image(
-            painter = painterResource(id=R.drawable.fondo1),
+            painter = painterResource(id=R.drawable.fondo3),
             contentDescription = "Fondo de pantalla",
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
@@ -71,11 +72,11 @@ fun Splash(){
             )
             Spacer(modifier = Modifier.height(24.dp))
             Text("Bienvenido a PawHearts",
-                fontSize = 30.sp,
+                fontSize = 22.sp,
                 fontWeight = FontWeight.Bold
             )
             Text("Welcome to PawHearts",
-                fontSize = 30.sp,
+                fontSize = 22.sp,
                 fontWeight = FontWeight.Bold )
         }
     }

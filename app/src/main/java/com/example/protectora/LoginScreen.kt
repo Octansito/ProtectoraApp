@@ -9,18 +9,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 
+
+
+
 @Composable
-fun MainScreen(){
+fun LoginScreen(){
     Column(
         modifier=Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ){
-        Text("Pantalla Principal")
+        Text("Pantalla Registro")
     }
 }
+
+
 @Preview(showBackground = true)
 @Composable
 fun MainScreenPreview(){
-    MainScreen()
+    LoginScreen()
 }

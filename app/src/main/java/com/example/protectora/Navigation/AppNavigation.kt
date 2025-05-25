@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.protectora.MainScreen
+import com.example.protectora.LoginScreen
 import com.example.protectora.SplashScreen
 
 @Composable
@@ -19,8 +19,8 @@ fun AppNavigation(){
             //Elemento composable que la representa
             SplashScreen(navController)
         }
-        composable(AppScreens.MainScreen.route){
-            MainScreen()
+        composable(AppScreens.LoginScreen.route){
+            LoginScreen()
         }
     }
 }

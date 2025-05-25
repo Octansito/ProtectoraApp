@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -49,6 +50,8 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     //Librería navegación
     implementation("androidx.navigation:navigation-compose:2.5.0-rc01")
+    //Firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
 
     implementation(libs.androidx.material3)
     implementation(libs.androidx.appcompat)
