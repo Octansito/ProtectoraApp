@@ -1,4 +1,4 @@
-package com.example.protectora
+package com.example.protectora.ui.SplashScreen
 
 
 import androidx.compose.foundation.Image
@@ -23,23 +23,38 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.protectora.Navigation.AppScreens
+import com.example.protectora.R
+import com.example.protectora.ui.Navigation.AppScreens
+import com.example.protectora.ui.auth.starup.AuthViewModel
 import kotlinx.coroutines.delay
+import androidx.lifecycle.viewmodel.compose.viewModel
+
 
 /**
  * Pantalla de carga de la aplicación+
  */
 //Contempla la lógica
 @Composable
-fun SplashScreen(navController: NavController){
+fun SplashScreen(navController: NavController, viewModel: AuthViewModel=viewModel()){
+    val estaLogueado=viewModel.iniciadaSesion
     //Función en segundo plano
     LaunchedEffect(key1 = true) {
         //Se navegará a la pantalla principal cuando transcurran 5 srgundos
        delay(5000)
-        //Evitamos que podamos retroceder a la pantalla de Splash
-        navController.popBackStack()
-        //Mapeamos la pantalla MainScreen para dirigirnos a ella
-        navController.navigate(AppScreens.LoginScreen.route)
+        if(estaLogueado){
+            navController.navigate(AppScreens.PrincipalScreen.route)
+            //Evitamos que podamos retroceder a la pantalla de Splash
+            navController.popBackStack()
+        }else{
+            navController.navigate(AppScreens.LoginScreen.route)
+            //Evitamos que podamos retroceder a la pantalla de Splash
+            navController.popBackStack()
+        }
+
+    }
+    // Puedes mostrar aquí tu logo, animación o imagen de carga
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Text("Cargando...")
     }
     //Llamamos al método Splash
     Splash()
@@ -53,7 +68,7 @@ fun Splash(){
         modifier=Modifier.fillMaxSize()
     ){
         Image(
-            painter = painterResource(id=R.drawable.fondo3),
+            painter = painterResource(id= R.drawable.fondo3),
             contentDescription = "Fondo de pantalla",
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
@@ -63,7 +78,7 @@ fun Splash(){
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ){
-            Image(painter = painterResource(id=R.drawable.logo3),
+            Image(painter = painterResource(id= R.drawable.logo3),
                 contentDescription = "Logo Protectora",
                 Modifier.size(150.dp, 150.dp)
                     //Bordes redondeados

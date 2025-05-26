@@ -49,21 +49,36 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
+
     //Librería navegación
     implementation("androidx.navigation:navigation-compose:2.5.0-rc01")
+
     //Firebase
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
+    //Firebase autenticación
     implementation("com.google.firebase:firebase-auth")
+    //Credential Manager libraries y sus versiones específicas
+    implementation("androidx.credentials:credentials:1.3.0")
+    implementation("androidx.credentials:credentials-play-services-auth:1.3.0")
+    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
+
+
+    //FireStrore
+    implementation("com.google.firebase:firebase-firestore")
 
     // ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.6")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
+
+
     //Serializacion
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json: 1.6.3")
+
     implementation(libs.androidx.material3)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.firebase.crashlytics.buildtools)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
