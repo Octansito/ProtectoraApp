@@ -1,5 +1,6 @@
-package com.example.protectora.ui.components
+package com.example.protectora.ui.auth.components
 
+import android.R
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -36,7 +37,7 @@ fun DialogoDeConfirmacion(
                 }
             ) {
                 //recuperamos el string del ok del Sistema Operativo
-                Text(stringResource(id = android.R.string.ok))
+                Text(stringResource(id = R.string.ok))
             }
         },
         dismissButton = {
@@ -46,7 +47,7 @@ fun DialogoDeConfirmacion(
                 }
             ) {
                 //recuperamos el string del cancel del Sistema Operativo
-                Text(stringResource(id = android.R.string.cancel))
+                Text(stringResource(id = R.string.cancel))
             }
         }
     )

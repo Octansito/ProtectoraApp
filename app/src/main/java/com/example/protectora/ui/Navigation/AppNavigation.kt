@@ -1,6 +1,8 @@
 package com.example.protectora.ui.Navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -11,9 +13,19 @@ import com.example.protectora.ui.auth.register.RegisterScreen
 
 
 @Composable
-fun AppNavigation(){
+fun AppNavigation(navController: NavHostController, isUserLoggedIn: Boolean){
     //Creamos constante para crear NavController por defecto
     val navController= rememberNavController()
+    //Redirige automáticamente si está logueado
+    LaunchedEffect(Unit) {
+        if (isUserLoggedIn) {
+            navController.navigate(AppScreens.PrincipalScreen.route) {
+                popUpTo(AppScreens.SplashScreen.route) { inclusive = true }
+            }
+        }
+    }
+
+
     NavHost(
         navController = navController,
         startDestination = AppScreens.SplashScreen.route,
@@ -24,7 +36,7 @@ fun AppNavigation(){
         }
         composable(AppScreens.PrincipalScreen.route){
             //Elemento composable que la representa
-            PrincipalScreen(navController)
+            PrincipalScreen()
         }
         composable(AppScreens.InitialScreen.route){
             //Elemento composable que la representa

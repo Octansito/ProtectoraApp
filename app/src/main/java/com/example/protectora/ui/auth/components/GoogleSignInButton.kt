@@ -1,4 +1,4 @@
-package com.example.protectora.ui.components
+package com.example.protectora.ui.auth.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Spacer
