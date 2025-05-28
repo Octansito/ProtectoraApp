@@ -48,7 +48,7 @@ fun SplashScreen(navController: NavController, viewModel: AuthViewModel=viewMode
             //Evitamos que podamos retroceder a la pantalla de Splash
             navController.popBackStack()
         }else{
-            navController.navigate(AppScreens.LoginScreen.route){
+            navController.navigate(AppScreens.InitialScreen.route){
                 popUpTo(AppScreens.SplashScreen.route) { inclusive = true }
             }
             //Evitamos que podamos retroceder a la pantalla de Splash

@@ -5,8 +5,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.protectora.ui.PrincipalScreen.PrincipalScreen
-import com.example.protectora.ui.auth.login.LoginScreen
 import com.example.protectora.ui.SplashScreen.SplashScreen
+import com.example.protectora.ui.InitialScreen.InitialScreen
 import com.example.protectora.ui.auth.register.RegisterScreen
 
 
@@ -26,7 +26,18 @@ fun AppNavigation(){
             //Elemento composable que la representa
             PrincipalScreen(navController)
         }
+        composable(AppScreens.InitialScreen.route){
+            //Elemento composable que la representa
+            InitialScreen(
+                onNavigateToLogin = {
+                    navController.navigate(AppScreens.LoginScreen.route)
+                },
+                onNavigateToRegister = {
+                    navController.navigate(AppScreens.RegisterScreen.route)
+                }
+            )
 
+        }
         composable(AppScreens.RegisterScreen.route){
             RegisterScreen(navController = navController)
         }
