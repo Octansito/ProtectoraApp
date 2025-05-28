@@ -37,9 +37,6 @@ import com.example.protectora.ui.auth.components.TouchableLoginText
  * Composable que representa la pantalla de inicio de sesión.
  * Gestiona el estado de la autenticación y proporciona una interfaz interactiva para ingresar email y contraseña.
  *
- * @param onBack Callback que se ejecuta cuando el usuario presiona el botón "Atrás".
- * @param onLoginSuccess Callback que se ejecuta cuando el inicio de sesión es exitoso.
- * @param viewModel Instancia de `AuthViewModel` para gestionar la lógica de autenticación.
  */
 @Composable
 fun InitialScreen(  onNavigateToLogin: () -> Unit,
