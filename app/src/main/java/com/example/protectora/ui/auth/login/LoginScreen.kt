@@ -110,12 +110,14 @@ fun LoginScreen(
 
             Button(
                     onClick = {
-                      viewModel.validarYLogin(email,password)
+                      //viewModel.validarYLogin(email,password)
+                        throw Exception("Error en el botón")
                     },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = customBorderColor // Verde (puedes cambiar el código HEX si quieres otro tono)
                     )
+
 
             ) {
                     Text("Acceder")
