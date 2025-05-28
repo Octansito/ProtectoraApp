@@ -22,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.protectora.data.firebase.AutenticacionFireBase.esCorrectoEmail
-import com.example.protectora.ui.auth.components.Encabezado
 import com.example.protectora.ui.auth.components.MuestraEstado
 import com.example.protectora.ui.auth.starup.AuthState
 import com.example.protectora.ui.auth.starup.AuthViewModel
@@ -54,14 +53,8 @@ fun ResetPasswordScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        // Encabezado con botón "Atrás" y título
-        Encabezado(
-            onBack = onBack,
-            titulo = "Restablecer contraseña",
-            modifier = Modifier
-                .weight(1f) // Ocupa un peso proporcional dentro del contenedor
-                .fillMaxWidth() // Ocupa todo el ancho disponible
-        )
+
+
         //Si está introduciendo el email o hay error
         if(uiState is AuthState.Idle || !(uiState is AuthState.Success)) {
             // Campo de texto para el email

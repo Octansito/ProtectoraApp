@@ -36,17 +36,21 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 //Contempla la lógica
 @Composable
 fun SplashScreen(navController: NavController, viewModel: AuthViewModel=viewModel()){
-    val estaLogueado=viewModel.iniciadaSesion
+
     //Función en segundo plano
     LaunchedEffect(key1 = true) {
         //Se navegará a la pantalla principal cuando transcurran 5 srgundos
        delay(5000)
-        if(estaLogueado){
-            navController.navigate(AppScreens.PrincipalScreen.route)
+        if(viewModel.iniciadaSesion){
+            navController.navigate(AppScreens.PrincipalScreen.route){
+                popUpTo(AppScreens.SplashScreen.route) { inclusive = true }
+            }
             //Evitamos que podamos retroceder a la pantalla de Splash
             navController.popBackStack()
         }else{
-            navController.navigate(AppScreens.LoginScreen.route)
+            navController.navigate(AppScreens.LoginScreen.route){
+                popUpTo(AppScreens.SplashScreen.route) { inclusive = true }
+            }
             //Evitamos que podamos retroceder a la pantalla de Splash
             navController.popBackStack()
         }

@@ -23,7 +23,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.protectora.data.firebase.AutenticacionFireBase.esCorrectoEmail
 import com.example.protectora.ui.Navigation.AppScreens
-import com.example.protectora.ui.auth.components.Encabezado
 import com.example.protectora.ui.auth.components.MuestraEstado
 import com.example.protectora.ui.auth.components.PasswordOutlinedTextField
 import com.example.protectora.ui.auth.starup.AuthState
@@ -64,14 +63,7 @@ fun RegisterScreen(navController: NavController,
         horizontalAlignment = Alignment.CenterHorizontally, // Alineación horizontal centrada.
         verticalArrangement = Arrangement.Center // Alineación vertical centrada.
     ) {
-        // Encabezado con el botón "Atrás" y título.
-        Encabezado(
-            onBack = onBack,
-            titulo = "Crear nueva cuenta",
-            modifier = Modifier
-                .weight(1f) // Asigna un peso proporcional dentro del contenedor.
-                .fillMaxWidth() // Ocupa todo el ancho disponible.
-        )
+
        OutlinedTextField(
             value = displayName, // Valor actual del email.
             onValueChange = { displayName = it },

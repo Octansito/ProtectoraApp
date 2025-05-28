@@ -26,16 +26,7 @@ fun AppNavigation(){
             //Elemento composable que la representa
             PrincipalScreen(navController)
         }
-        composable(AppScreens.LoginScreen.route){
-            LoginScreen(
-                navController = navController,
-                onLoginSuccess = {
-                    navController.navigate(AppScreens.PrincipalScreen.route) {
-                        popUpTo(AppScreens.LoginScreen.route) { inclusive = true }
-                    }
-                }
-            )
-        }
+
         composable(AppScreens.RegisterScreen.route){
             RegisterScreen(navController = navController)
         }
