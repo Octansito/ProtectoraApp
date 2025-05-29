@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.protectora.data.repository.Repository
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -29,28 +30,7 @@ class AuthViewModel : ViewModel() {
     var iniciadaSesion = false
 
 
-    /**
-     * Validación de email y contraseña.
-     */
-    fun esCorrectoEmail(email: String):Boolean{
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    }
-    fun validarYLogin(email: String, password: String) {
-        when {
-            email.isEmpty() || password.isEmpty() -> {
-                camposVacios()
-            }
-            !esCorrectoEmail(email) -> {
-                emailIncorrecto()
-            }
-            password.length < 6 -> {
-                contrasenyaMenor()
-            }
-            else -> {
-                login(email, password)
-            }
-        }
-    }
+
     /**
      * Inicia el proceso de inicio de sesión con el email y contraseña proporcionados.
      * Actualiza el estado de la UI según el resultado de la operación.
@@ -154,6 +134,6 @@ class AuthViewModel : ViewModel() {
         Repository.logout()
     }
     fun estaLogueado(): Boolean {
-        return Repository.estaLogueado()
+        return FirebaseAuth.getInstance().currentUser != null
     }
 }

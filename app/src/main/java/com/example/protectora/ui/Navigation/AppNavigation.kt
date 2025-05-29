@@ -2,29 +2,32 @@ package com.example.protectora.ui.Navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.example.protectora.ui.PrincipalScreen.PrincipalScreen
 import com.example.protectora.ui.SplashScreen.SplashScreen
 import com.example.protectora.ui.InitialScreen.InitialScreen
+import com.example.protectora.ui.PrincipalScreen.MainScreen
+import com.example.protectora.ui.auth.login.LoginScreen
 import com.example.protectora.ui.auth.register.RegisterScreen
+import com.google.firebase.auth.FirebaseAuth
 
+/**
+ * Composable que gestiona la navegación entre pantallas de la aplicación.
+ */
 
 @Composable
 fun AppNavigation(navController: NavHostController, isUserLoggedIn: Boolean){
-    //Creamos constante para crear NavController por defecto
-    val navController= rememberNavController()
+
     //Redirige automáticamente si está logueado
     LaunchedEffect(Unit) {
         if (isUserLoggedIn) {
-            navController.navigate(AppScreens.PrincipalScreen.route) {
+            navController.navigate(AppScreens.MainScreen.route) {
                 popUpTo(AppScreens.SplashScreen.route) { inclusive = true }
             }
         }
     }
-
 
     NavHost(
         navController = navController,
@@ -34,11 +37,8 @@ fun AppNavigation(navController: NavHostController, isUserLoggedIn: Boolean){
             //Elemento composable que la representa
             SplashScreen(navController)
         }
-        composable(AppScreens.PrincipalScreen.route){
-            //Elemento composable que la representa
-            PrincipalScreen()
-        }
-        composable(AppScreens.InitialScreen.route){
+
+        composable(AppScreens.InitialScreen.route) {
             //Elemento composable que la representa
             InitialScreen(
                 onNavigateToLogin = {
@@ -50,8 +50,19 @@ fun AppNavigation(navController: NavHostController, isUserLoggedIn: Boolean){
             )
 
         }
-        composable(AppScreens.RegisterScreen.route){
-            RegisterScreen(navController = navController)
+        composable(AppScreens.MainScreen.route) {
+            MainScreen()
         }
+        composable(AppScreens.RegisterScreen.route) {
+            RegisterScreen(navController)
+        }
+        composable(AppScreens.LoginScreen.route) {
+            LoginScreen(auth = FirebaseAuth.getInstance(), navController = navController)
+        }
+
+
+//        composable(AppScreens.RegisterScreen.route){
+//            RegisterScreen(navController = navController)
+//        }
     }
 }

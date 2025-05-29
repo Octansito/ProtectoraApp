@@ -84,7 +84,7 @@ fun InitialScreen(  onNavigateToLogin: () -> Unit,
             Spacer(modifier = Modifier.weight(1f))
             Button(
                 onClick = {
-                    onNavigateToRegister
+                    onNavigateToRegister()
                 },
                 modifier=Modifier
                 .fillMaxWidth()

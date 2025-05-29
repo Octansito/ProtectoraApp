@@ -1,6 +1,8 @@
 package com.example.protectora.ui.auth.login
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,7 +16,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -37,13 +41,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.protectora.ui.Navigation.AppScreens
 import com.example.protectora.ui.auth.components.EmailOutlinedTextField
 import com.example.protectora.ui.auth.components.PasswordOutlinedTextField
 import com.google.firebase.auth.FirebaseAuth
 
 
 @Composable
-fun LoginScreen(auth: FirebaseAuth){
+fun LoginScreen(auth: FirebaseAuth, navController: NavController){
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
     val customColor= Color(0xFF005A44)
     val lightGreen = Color(0xFFB2D8CC)  // Verde claro para la "bolita"
     var isResponsible by remember { mutableStateOf(false) }
@@ -57,45 +66,55 @@ fun LoginScreen(auth: FirebaseAuth){
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
-        Image(
-            painter = painterResource(id = R.drawable.logo3),
-            contentDescription = "Logo de la app",
-            modifier = Modifier
-                .size(200.dp)
-                .clip(RoundedCornerShape(24.dp)) // Bordes redondeados
-        )
+
         Column(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxSize()
             .padding(24.dp)
         ) {
+            Image(
+                painter = painterResource(id = R.drawable.logo3),
+                contentDescription = "Logo de la app",
+                modifier = Modifier
+                    .size(200.dp)
+                    .clip(RoundedCornerShape(24.dp))
+                    .align(Alignment.CenterHorizontally)//
+            )
             Icon(
-                imageVector = Icons.Filled.ArrowBack,
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Volver atrás",
                 modifier = Modifier
+                    .clickable( indication=null,
+                        interactionSource = remember { MutableInteractionSource() }){
+                        navController.navigate(AppScreens.InitialScreen.route) {
+                            popUpTo(AppScreens.LoginScreen.route) { inclusive = true }
+                        }
+                    }
                     .padding(top = 32.dp, bottom = 16.dp)
                     .size(32.dp),
                 tint = Color.Black
             )
-            Text("Email",
+            Text(
+                "Email",
                 color=Color.Black,
                 fontWeight= FontWeight.Bold,
                 fontSize=40.sp
             )
             EmailOutlinedTextField(
-                email = "",
+                email = email,
                 onEmailChange = { },
                 customBorderColor = Color.Black
             )
             Spacer(modifier = Modifier.height(24.dp))
-            Text("Contraseña",
+            Text(
+                "Contraseña",
                 color=Color.Black,
                 fontWeight= FontWeight.Bold,
                 fontSize=40.sp
             )
             PasswordOutlinedTextField(
-                password = "",
+                password = password,
                 onPasswordChange = { },
                 customBorderColor = Color.Black,
             )
@@ -135,6 +154,27 @@ fun LoginScreen(auth: FirebaseAuth){
 
                 )
             }
+            Spacer(modifier = Modifier.height(32.dp))
+            Button(
+                onClick = {
+                    // Aquí puedes autenticar con FirebaseAuth
+                    auth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                // Navegar o mostrar éxito
+                            } else {
+                                // Mostrar error
+                            }
+                        }
+                },
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = customColor,
+                    contentColor = Color.White
+                )
+            ) {
+                Text("Iniciar sesión")
+            }
         }
     }
 
@@ -144,5 +184,6 @@ fun LoginScreen(auth: FirebaseAuth){
 @Composable
 fun LoginScreenPreview() {
     // Puedes pasar null si no necesitas auth en el preview
-    LoginScreen(auth = FirebaseAuth.getInstance())
+    LoginScreen(auth = FirebaseAuth.getInstance(), navController = rememberNavController())
+
 }
