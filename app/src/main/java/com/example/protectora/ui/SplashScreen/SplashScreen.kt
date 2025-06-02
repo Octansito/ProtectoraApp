@@ -35,13 +35,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
  */
 //Contempla la lógica
 @Composable
-fun SplashScreen(navController: NavController, viewModel: AuthViewModel=viewModel()){
+fun SplashScreen(navController: NavController, authViewModel: AuthViewModel=viewModel()){
 
     //Función en segundo plano
-    LaunchedEffect(key1 = true) {
-        //Se navegará a la pantalla principal cuando transcurran 5 srgundos
-       delay(5000)
-        if (viewModel.estaLogueado()) {
+
+    // Esto se ejecuta una vez cuando se compone la pantalla
+    LaunchedEffect(Unit) {
+        delay(3000)
+
+        if (authViewModel.estaLogueado()) {
             navController.navigate(AppScreens.MainScreen.route) {
                 popUpTo(AppScreens.SplashScreen.route) { inclusive = true }
             }
@@ -50,8 +52,8 @@ fun SplashScreen(navController: NavController, viewModel: AuthViewModel=viewMode
                 popUpTo(AppScreens.SplashScreen.route) { inclusive = true }
             }
         }
-
     }
+
     // Puedes mostrar aquí tu logo, animación o imagen de carga
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Text("Cargando...")

@@ -10,11 +10,15 @@ sealed class AuthState {
     object Idle : AuthState() // Estado inicial sin actividad
     object Loading : AuthState() // Estado de carga
     object Success : AuthState() // Estado de éxito
+    object SuccessResponsable : AuthState()
+    object SuccessUsuario : AuthState()
     object ErrorContrasenyaNoConciden : AuthState() // Error: contraseñas no coinciden
     object ErrorCamposVacios : AuthState() // Error: campos vacíos
     object ErrorEmailIncorrecto : AuthState() // Error: email incorrecto
     object ErrorEmailMenor : AuthState() // Error: email incorrecto
+    object ErrorCodigoResponsableInvalido : AuthState() // Código responsable no válido
 
-    // Estado de error genérico con un mensaje asociado
-    data class Error(val exception: String) : AuthState()
+    //Error con mensaje
+    data class Error(val message: String) : AuthState()
+
 }

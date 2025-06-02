@@ -1,7 +1,7 @@
 package com.example.protectora.ui.Navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -11,7 +11,8 @@ import com.example.protectora.ui.InitialScreen.InitialScreen
 import com.example.protectora.ui.PrincipalScreen.MainScreen
 import com.example.protectora.ui.auth.login.LoginScreen
 import com.example.protectora.ui.auth.register.RegisterScreen
-import com.google.firebase.auth.FirebaseAuth
+import com.example.protectora.ui.auth.starup.AuthViewModel
+
 
 /**
  * Composable que gestiona la navegación entre pantallas de la aplicación.
@@ -19,25 +20,16 @@ import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun AppNavigation(navController: NavHostController, isUserLoggedIn: Boolean){
-
-    //Redirige automáticamente si está logueado
-    LaunchedEffect(Unit) {
-        if (isUserLoggedIn) {
-            navController.navigate(AppScreens.MainScreen.route) {
-                popUpTo(AppScreens.SplashScreen.route) { inclusive = true }
-            }
-        }
-    }
-
     NavHost(
         navController = navController,
         startDestination = AppScreens.SplashScreen.route,
     ) {
+        // Composable para la pantalla de carga
         composable(AppScreens.SplashScreen.route){
             //Elemento composable que la representa
-            SplashScreen(navController)
+            SplashScreen(navController=navController)
         }
-
+        // Composable para la pantalla inicial
         composable(AppScreens.InitialScreen.route) {
             //Elemento composable que la representa
             InitialScreen(
@@ -50,19 +42,21 @@ fun AppNavigation(navController: NavHostController, isUserLoggedIn: Boolean){
             )
 
         }
+        // Composable para la pantalla principal
         composable(AppScreens.MainScreen.route) {
-            MainScreen()
+            MainScreen(navController=navController)
         }
+        // Composable para la pantalla de registro
         composable(AppScreens.RegisterScreen.route) {
-            RegisterScreen(navController)
+            val authViewModel: AuthViewModel = viewModel()
+            RegisterScreen(viewModel = authViewModel, navController = navController)
         }
+        // Composable para la pantalla de inicio de sesión
         composable(AppScreens.LoginScreen.route) {
-            LoginScreen(auth = FirebaseAuth.getInstance(), navController = navController)
+            //LoginScreen(auth = FirebaseAuth.getInstance(), navController = navController)
+            val authViewModel: AuthViewModel = viewModel()
+            LoginScreen(viewModel = authViewModel, navController = navController)
         }
 
-
-//        composable(AppScreens.RegisterScreen.route){
-//            RegisterScreen(navController = navController)
-//        }
     }
 }

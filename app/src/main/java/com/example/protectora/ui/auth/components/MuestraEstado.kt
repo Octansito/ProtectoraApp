@@ -61,9 +61,13 @@ fun MuestraEstado(uiState: AuthState) {
         // Estado de error genérico, muestra el mensaje de error proporcionado
         is AuthState.Error -> {
             Text(
-                text = (uiState as AuthState.Error).exception, // Mensaje de error
+                text = uiState.message, // Mensaje de error
                 color = MaterialTheme.colorScheme.error // Aplica color de error del tema actual
             )
         }
+
+        AuthState.ErrorCodigoResponsableInvalido -> TODO()
+        AuthState.SuccessResponsable -> TODO()
+        AuthState.SuccessUsuario -> TODO()
     }
 }
