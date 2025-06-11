@@ -7,8 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 
-class PrincipalViewModel: ViewModel()
-{
+class PrincipalViewModel: ViewModel() {
     private val _uiState = MutableStateFlow(UiStatePrincipal(usuario = Repository.getCurrentUser()))
     val uiState: StateFlow<UiStatePrincipal> = _uiState.asStateFlow()
 

@@ -1,5 +1,6 @@
 package com.example.protectora.ui.auth.login
 
+import android.annotation.SuppressLint
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.foundation.Image
@@ -23,12 +24,13 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.ui.draw.clip
-import com.example.protectora.R
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.protectora.ui.Navigation.AppScreens
 import com.example.protectora.ui.auth.components.EmailOutlinedTextField
 import com.example.protectora.ui.auth.components.PasswordOutlinedTextField
 import com.example.protectora.ui.auth.starup.AuthState
 import com.example.protectora.ui.auth.starup.AuthViewModel
+import com.example.protectora.R
 
 
 @Composable
@@ -151,5 +153,11 @@ fun LoginScreen(viewModel: AuthViewModel, navController: NavController) {
     }
 }
 
-
+@SuppressLint("ViewModelConstructorInComposable")
+@Preview(showBackground = true)
+@Composable
+fun LoginScreenPreview() {
+    val navController = NavController(LocalContext.current)
+    LoginScreen(viewModel = AuthViewModel(), navController = navController)
+}
 

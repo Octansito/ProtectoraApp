@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.protectora.R
 
+
 //Creamos la función del botón de Google
 @Composable
 fun GoogleSignInButton(onClick: () -> Unit) {

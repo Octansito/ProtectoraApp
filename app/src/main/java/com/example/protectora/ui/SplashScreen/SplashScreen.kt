@@ -1,6 +1,7 @@
 package com.example.protectora.ui.SplashScreen
 
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,11 +24,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.protectora.R
 import com.example.protectora.ui.Navigation.AppScreens
 import com.example.protectora.ui.auth.starup.AuthViewModel
 import kotlinx.coroutines.delay
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.protectora.R
 
 
 /**
@@ -41,16 +42,25 @@ fun SplashScreen(navController: NavController, authViewModel: AuthViewModel=view
 
     // Esto se ejecuta una vez cuando se compone la pantalla
     LaunchedEffect(Unit) {
+        //pausa de 3 segundos
         delay(3000)
-
-        if (authViewModel.estaLogueado()) {
-            navController.navigate(AppScreens.MainScreen.route) {
-                popUpTo(AppScreens.SplashScreen.route) { inclusive = true }
-            }
+        //Llama a la función estaLogueado() del authViewModel para ver si el usuario ya ha iniciado sesión.
+        val estaLogueado = authViewModel.estaLogueado()
+        Log.d("SplashScreen", "¿Está logueado? $estaLogueado")
+        //Si está logueado va a la pantalla principal
+        val destino = if (estaLogueado) {
+            AppScreens.MainScreen.route
         } else {
-            navController.navigate(AppScreens.InitialScreen.route) {
-                popUpTo(AppScreens.SplashScreen.route) { inclusive = true }
+            //Sino va a la pantalla inicial
+            AppScreens.InitialScreen.route
+        }
+
+        // Verifica si ya se ha navegado, y limpia el backstack de SplashScreen
+        navController.navigate(destino) {
+            popUpTo(AppScreens.SplashScreen.route) {
+                inclusive = true
             }
+            launchSingleTop = true
         }
     }
 

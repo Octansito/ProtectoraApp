@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import com.example.protectora.R
 
+
 /**
  * Composable que muestra el logo de la aplicación como una imagen.
  * Permite personalizar su apariencia mediante el uso de un modificador.

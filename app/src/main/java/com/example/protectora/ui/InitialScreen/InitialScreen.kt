@@ -22,7 +22,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.protectora.R
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
@@ -31,6 +30,8 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.unit.sp
 import com.example.protectora.ui.auth.components.CustomButton
 import com.example.protectora.ui.auth.components.TouchableLoginText
+import com.example.protectora.R
+import com.example.protectora.ui.auth.components.CustomSocialButton
 
 /**
  * Composable que representa la pantalla de inicio de sesión.
@@ -103,14 +104,24 @@ fun InitialScreen(  onNavigateToLogin: () -> Unit,
             }
             Spacer(modifier = Modifier.height(8.dp))
 
-            CustomButton(Modifier.clickable{
-            }, painterResource(id=R.drawable.google), "Continuar con Google")
+            CustomSocialButton(
+                painter = painterResource(id = R.drawable.google),
+                title = "Continuar con Google",
+                onClick = {
+                    // Lógica de Google login
+                }
+            )
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            CustomButton(Modifier.clickable{
-            }, painterResource(id=R.drawable.facebook_logo), "Continuar con Facebook")
 
+            CustomSocialButton(
+                painter = painterResource(id = R.drawable.facebook_logo),
+                title = "Continuar con Facebook",
+                onClick = {
+                    // Lógica de Facebook login
+                }
+            )
             Spacer(modifier = Modifier.height(8.dp))
 
             TouchableLoginText(onNavigateToLogin = onNavigateToLogin)

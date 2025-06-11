@@ -1,7 +1,5 @@
 package com.example.protectora.ui.auth.starup
 
-import com.example.protectora.data.model.Usuario
-
 /**
  * Clase sellada que representa los diferentes estados de la autenticación.
  * Es parecido a un Enum pero con más opciones.

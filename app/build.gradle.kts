@@ -75,6 +75,13 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     //material3
     implementation(libs.material3)
+
+    // Incluimos todos los foundation layouts como el FlowRow
+    implementation(libs.androidx.foundation)
+    //Importación para reproducir gifs de lottie-compose
+    implementation(libs.lottie.compose)
+
+
     implementation(libs.androidx.material3)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.activity)
