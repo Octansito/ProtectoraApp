@@ -3,6 +3,7 @@ package com.example.protectora.ui.auth.components
 
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -12,42 +13,48 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.border
 import androidx.compose.runtime.*
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
 import com.airbnb.lottie.compose.*
 
 
 @Composable
-fun StaticAvatar(drawableRes: Int, onClick: () -> Unit) {
+fun StaticAvatar(drawableRes: Int,  size: Dp = 200.dp,onClick: () -> Unit) {
     Box(
         modifier = Modifier
-            .size(80.dp)
+            .size(size)
             .clip(CircleShape)
+            .background(Color.White)
             .border(2.dp, Color.Black, CircleShape)
             .clickable { onClick() }
     ) {
         Image(
             painter = painterResource(id = drawableRes),
             contentDescription = null,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            // Ajusta el ContentScale
+            contentScale = ContentScale.Crop
         )
     }
 }
 
 @Composable
-fun LottieAvatar(lottieRes: Int, onClick: () -> Unit) {
+fun LottieAvatar(lottieRes: Int, size: Dp = 200.dp ,onClick: () -> Unit) {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(lottieRes))
     val progress by animateLottieCompositionAsState(composition)
 
     Box(
         modifier = Modifier
-            .size(80.dp)
+            .size(size)
             .clip(CircleShape)
+            .background(Color.White)
             .border(2.dp, Color.Black, CircleShape)
             .clickable { onClick() }
     ) {
         LottieAnimation(
-            composition,
-            progress,
+            composition=composition,
+            progress=progress,
             modifier = Modifier.fillMaxSize()
         )
     }

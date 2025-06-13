@@ -3,16 +3,11 @@ package com.example.protectora.ui.auth.components
 import com.example.protectora.ui.auth.register.AvatarOption
 
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.graphics.Color
-import androidx.compose.foundation.border
 import com.example.protectora.ui.auth.register.RegisterViewModel
 import com.example.protectora.R
 import androidx.compose.foundation.layout.FlowRow
@@ -47,20 +42,15 @@ fun UnifiedAvatarSelector(registerViewModel: RegisterViewModel) {
 
     var showSheet by remember { mutableStateOf(false) }
 
-    Box(
-        modifier = Modifier
-            .size(160.dp)
-            .clip(CircleShape)
-            .border(3.dp, Color.Black, CircleShape)
-            .clickable { showSheet = true }
-    ) {
-        val avatar = registerViewModel.selectedAvatar.value ?: avatarList.first()
 
-        when (avatar) {
-            is AvatarOption.Image -> StaticAvatar(avatar.drawableRes) {}
-            is AvatarOption.Animation -> LottieAvatar(avatar.lottieRes) {}
-        }
+    val avatar = registerViewModel.selectedAvatar.value ?: avatarList.first()
+    when (avatar) {
+        //Para una imagen
+        is AvatarOption.Image -> StaticAvatar(avatar.drawableRes, size = 160.dp) { showSheet = true }
+        //Para un gif
+        is AvatarOption.Animation -> LottieAvatar(avatar.lottieRes, size = 160.dp) { showSheet = true }
     }
+
 
     if (showSheet) {
         ModalBottomSheet(
@@ -71,11 +61,11 @@ fun UnifiedAvatarSelector(registerViewModel: RegisterViewModel) {
             ) {
                 avatarList.forEach { avatarOption ->
                     when (avatarOption) {
-                        is AvatarOption.Image -> StaticAvatar(avatarOption.drawableRes) {
+                        is AvatarOption.Image -> StaticAvatar(avatarOption.drawableRes, size = 80.dp) {
                             registerViewModel.setSelectedAvatar(avatarOption)
                             showSheet = false
                         }
-                        is AvatarOption.Animation -> LottieAvatar(avatarOption.lottieRes) {
+                        is AvatarOption.Animation -> LottieAvatar(avatarOption.lottieRes, size = 80.dp) {
                             registerViewModel.setSelectedAvatar(avatarOption)
                             showSheet = false
                         }

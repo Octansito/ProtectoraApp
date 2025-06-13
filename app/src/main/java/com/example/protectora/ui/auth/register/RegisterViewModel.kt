@@ -14,9 +14,11 @@ sealed class AvatarOption {
 }
 
 class RegisterViewModel : ViewModel() {
+    // Estado para el avatar seleccionado
     private val _selectedAvatar = mutableStateOf<AvatarOption?>(null)
+    // Propiedad de solo lectura para el avatar seleccionado
     val selectedAvatar: State<AvatarOption?> = _selectedAvatar
-
+// Método para establecer el avatar seleccionado
     fun setSelectedAvatar(avatar: AvatarOption) {
         _selectedAvatar.value = avatar
     }

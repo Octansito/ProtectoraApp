@@ -60,6 +60,19 @@ fun RegisterScreen(viewModel: AuthViewModel, navController: NavController) {
             modifier = Modifier.fillMaxSize()
         )
 
+        IconButton(
+            onClick = { navController.popBackStack() },
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(start = 16.dp, top = 32.dp)  // <-- Aquí controlamos la separación superior
+        ) {
+            Icon(
+                imageVector = Icons.Filled.ArrowBack,
+                contentDescription = "Volver",
+                tint = Color.Black
+            )
+        }
+
         // Formulario centrado
         Column(
             modifier = Modifier
@@ -72,20 +85,7 @@ fun RegisterScreen(viewModel: AuthViewModel, navController: NavController) {
             UnifiedAvatarSelector(registerViewModel = registerViewModel)
 
             Spacer(modifier = Modifier.height(24.dp))
-            // Botón de volver atrás (flecha)
-            IconButton(
-                onClick = { navController.popBackStack() },
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth()
-                    .wrapContentWidth(Alignment.Start)
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = "Volver",
-                    tint = Color.Black
-                )
-            }
+
             Spacer(modifier = Modifier.height(16.dp))
             EmailOutlinedTextField(
                 email = email,
@@ -130,7 +130,9 @@ fun RegisterScreen(viewModel: AuthViewModel, navController: NavController) {
                             navController = navController,
                             auth = auth,
                             db = db,
-                            codigoResponsableAsignado = codigoResponsableAsignado
+                            codigoResponsableAsignado = codigoResponsableAsignado,
+                            //Pasamos el avatar seleccionado
+                            avatarOption = selectedAvatar
                         )
                     }
                 }
