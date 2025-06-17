@@ -1,4 +1,4 @@
-package com.example.protectora.ui.auth.register
+package com.example.protectora.ui.RegisterScreen
 
 import android.annotation.SuppressLint
 import android.widget.Toast
@@ -21,22 +21,23 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-
+import com.example.protectora.data.firebase.AutenticacionFireBase
 import com.example.protectora.ui.auth.components.CustomButton
 import com.example.protectora.ui.auth.components.EmailOutlinedTextField
 import com.example.protectora.ui.auth.components.NameOutlinedTextField
 import com.example.protectora.ui.auth.components.PasswordOutlinedTextField
 import com.example.protectora.ui.auth.components.RepeatPasswordOutlinedTextField
 import com.example.protectora.ui.auth.components.UnifiedAvatarSelector
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Composable
 fun RegisterScreen(viewModel: AuthViewModel, navController: NavController) {
     val context = LocalContext.current
-    val auth = FirebaseAuth.getInstance()
-    val db = FirebaseFirestore.getInstance()
     val codigoResponsableAsignado = remember { mutableStateOf<String?>(null) }
 
     var email by remember { mutableStateOf("") }
@@ -112,28 +113,34 @@ fun RegisterScreen(viewModel: AuthViewModel, navController: NavController) {
                 customBorderColor = Color.Black
             )
             Spacer(modifier = Modifier.height(32.dp))
-
             CustomButton(
                 title = "Registrar",
                 onClick = {
+                    // Comprobación inicial: si alguno de los campos está vacío, mostramos un mensaje de error.
                     if (email.isBlank() || password.isBlank() || repeatPassword.isBlank() || displayName.isBlank()) {
+                        //Si faltan campos, muestra un pequeño Toast en pantalla (mensaje emergente abajo) informando al usuario.
                         Toast.makeText(context, "Completa todos los campos", Toast.LENGTH_SHORT).show()
+                        //Segunda comprobación: valida que la contraseña y la repetición de contraseña coincidan.
                     } else if (password != repeatPassword) {
                         Toast.makeText(context, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show()
                     } else {
-                        val selectedAvatar = registerViewModel.selectedAvatar.value
-                        viewModel.registrarUsuario(
-                            context = context,
-                            email = email,
-                            password = password,
-                            displayName = displayName,
-                            navController = navController,
-                            auth = auth,
-                            db = db,
-                            codigoResponsableAsignado = codigoResponsableAsignado,
-                            //Pasamos el avatar seleccionado
-                            avatarOption = selectedAvatar
-                        )
+                        //Lanza una coroutine para registrar al usuario sin bloquear la UI
+                        CoroutineScope(Dispatchers.IO).launch {
+                            //Llamamos al método register de AutenticacionFireBase para registrar al usuario
+                            val resultado = AutenticacionFireBase.register(email, password, displayName)
+                            //Cambiamos al hilo principal para poder actualizar la UI
+                            withContext(Dispatchers.Main) {
+                                resultado.onSuccess { rol ->
+                                    //Si el registro es existoso, devuelve el rol del usuario
+                                    Toast.makeText(context, "Registro exitoso. Rol: $rol", Toast.LENGTH_SHORT).show()
+                                    navController.navigate(AppScreens.MainScreen.route)
+
+                                    //Si el registro falla, muestra un mensaje de error
+                                }.onFailure { e ->
+                                    Toast.makeText(context, "Error al registrar: ${e.message}", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
                     }
                 }
             )

@@ -1,4 +1,4 @@
-package com.example.protectora.ui.auth.register
+package com.example.protectora.ui.RegisterScreen
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel

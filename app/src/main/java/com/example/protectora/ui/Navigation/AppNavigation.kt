@@ -8,9 +8,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.protectora.ui.SplashScreen.SplashScreen
 import com.example.protectora.ui.InitialScreen.InitialScreen
-import com.example.protectora.ui.PrincipalScreen.MainScreen
-import com.example.protectora.ui.auth.login.LoginScreen
-import com.example.protectora.ui.auth.register.RegisterScreen
+import com.example.protectora.ui.MainScreen.MainScreen
+import com.example.protectora.ui.LoginScreen.LoginScreen
+import com.example.protectora.ui.RegisterScreen.RegisterScreen
 import com.example.protectora.ui.auth.starup.AuthViewModel
 
 

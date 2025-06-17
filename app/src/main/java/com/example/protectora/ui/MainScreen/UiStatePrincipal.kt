@@ -1,4 +1,4 @@
-package com.example.protectora.ui.PrincipalScreen
+package com.example.protectora.ui.MainScreen
 
 import com.example.protectora.data.model.Usuario
 

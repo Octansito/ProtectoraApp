@@ -1,4 +1,4 @@
-package com.example.protectora.ui.auth.resetpassword
+package com.example.protectora.ui.ResetPassScreen
 
 
 import androidx.compose.foundation.layout.Arrangement

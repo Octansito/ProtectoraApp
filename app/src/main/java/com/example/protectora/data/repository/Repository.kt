@@ -11,68 +11,14 @@ import kotlinx.coroutines.tasks.await
  */
 object Repository {
     /**
-     * Inicia sesión con un correo electrónico y contraseña utilizando la capa de autenticación.
+     * Inicia sesión con un correo electrónico y una contraseña.
      * @param email El correo electrónico del usuario.
      * @param password La contraseña del usuario.
      * @return Un resultado de la operación de inicio de sesión.
      */
-    suspend fun login(email: String, password: String) =
-        AutenticacionFireBase.login(email, password)
-
-   /**
-    * Registra un nuevo usuario con un correo electrónico, contraseña
-    */
-   suspend fun register(
-       email: String,
-       password: String,
-       displayName: String,
-       rol: String
-   ): Result<Unit> {
-       return try {
-           val auth = FirebaseAuth.getInstance()
-           val firestore = FirebaseFirestore.getInstance()
-
-           val authResult = auth.createUserWithEmailAndPassword(email, password).await()
-           val uid = authResult.user?.uid ?: throw Exception("UID no encontrado")
-
-           val userData = mutableMapOf<String, Any>(
-               "email" to email,
-               "displayName" to displayName,
-               "rol" to rol
-           )
-
-           // Si es responsable, generar código único
-           if (rol == "responsable") {
-               val codigo = generateUniqueResponsableCode()
-               userData["codigoResponsa"] = codigo
-           }
-
-           firestore.collection("users").document(uid).set(userData).await()
-
-           Result.success(Unit)
-       } catch (e: Exception) {
-           Result.failure(e)
-       }
-   }
-    suspend fun generateUniqueResponsableCode(): String {
-        val firestore = FirebaseFirestore.getInstance()
-        var code: String
-        var exists: Boolean
-
-        do {
-            // Puedes usar cualquier lógica de código, esto es solo un ejemplo
-            code = "RRF" + (100000..999999).random()
-            val snapshot = firestore.collection("users")
-                .whereEqualTo("codigoResponsa", code)
-                .get()
-                .await()
-            exists = !snapshot.isEmpty
-        } while (exists)
-
-        return code
+    suspend fun loginAndGetRole(email: String, password: String): Result<String> {
+        return AutenticacionFireBase.loginAndGetRole(email, password)
     }
-
-
 
     /**
      * Obtiene el usuario actualmente autenticado a través de la capa de autenticación.

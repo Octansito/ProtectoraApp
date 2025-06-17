@@ -1,16 +1,10 @@
 package com.example.protectora.ui.auth.starup
 
 
-import android.content.Context
 import android.util.Log
-import android.widget.Toast
-import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import com.example.protectora.data.repository.Repository
-import com.example.protectora.ui.Navigation.AppScreens
-import com.example.protectora.ui.auth.register.AvatarOption
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
@@ -93,104 +87,6 @@ class AuthViewModel : ViewModel() {
 
     val auth = FirebaseAuth.getInstance()
 
-    /**
-     * Registra un nuevo usuario con el email y contraseña proporcionados.
-     */
-    fun registrarUsuario(
-        context: Context,
-        email: String,
-        password: String,
-        displayName: String,
-        navController: NavController,
-        auth: FirebaseAuth,
-        db: FirebaseFirestore,
-        codigoResponsableAsignado: MutableState<String?>,
-        avatarOption: AvatarOption?
-    ) {
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-
-                if (task.isSuccessful) {
-                    val uid = auth.currentUser?.uid ?: return@addOnCompleteListener
-
-                    val avatarType = when (avatarOption) {
-                        is AvatarOption.Image -> "image"
-                        is AvatarOption.Animation -> "animation"
-                        else -> null
-                    }
-
-                    val resourceId = when (avatarOption) {
-                        is AvatarOption.Image -> getResourceName(avatarOption.drawableRes, context)
-                        is AvatarOption.Animation -> getResourceName(avatarOption.lottieRes, context)
-                        else -> null
-                    }
-                    db.collection("responsables")
-                        // Realiza una consulta para obtener el código de responsable
-                        .whereEqualTo("displayName", displayName)
-                        // Limita el resultado a un solo documento
-                        .get()
-                        // Maneja la respuesta de la consulta
-                        .addOnSuccessListener { documents ->
-
-                            val userData= if (!documents.isEmpty) {
-                                // Si hay documentos, toma el primer documento
-                                val doc = documents.documents[0]
-                                // Obtén el valor del campo "codigoResponsable"
-                                val codigoResponsable = doc.getString("codigoResponsable") ?: ""
-                                // Actualiza el valor de codigoResponsableAsignado
-                                codigoResponsableAsignado.value = codigoResponsable
-                                // Crea un mapa con los datos del usuario
-                                hashMapOf(
-                                    "email" to email,
-                                    "displayName" to displayName,
-                                    "rol" to "responsable",
-                                    "codigoResponsable" to codigoResponsable,
-                                    "avatarType" to avatarType,
-                                    "resourceId" to resourceId
-                                )
-                            } else {
-                                // Si no hay documentos, crea un mapa con los datos del usuario
-                                hashMapOf(
-                                    "email" to email,
-                                    "displayName" to displayName,
-                                    "rol" to "usuario",
-                                    "avatarType" to avatarType,
-                                    "resourceId" to resourceId
-                                )
-                            }
-                            // Guarda los datos del usuario en Firestore
-                            db.collection("users").document(uid).set(userData)
-                                // Maneja la respuesta de la operación
-                                .addOnSuccessListener {
-                                    // Registro exitoso
-                                    Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show()
-                                    // Navega a la pantalla principal
-                                    if (codigoResponsableAsignado.value == null) {
-                                        navController.navigate(AppScreens.MainScreen.route)
-                                    }
-                                }
-                                // Maneja cualquier error que pueda ocurrir durante el registro
-                                .addOnFailureListener {
-                                    Toast.makeText(context, "Error guardando datos", Toast.LENGTH_SHORT).show()
-                                }
-                        }
-                        // Maneja cualquier error que pueda ocurrir durante la consulta
-                        .addOnFailureListener {
-                            Toast.makeText(context, "Error consultando responsables", Toast.LENGTH_SHORT).show()
-                        }
-                } else {
-                    // Registro fallido
-                    Toast.makeText(context, "Error al registrar: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
-                }
-            }
-    }
-
-    /**
-     * Obtiene el nombre de recurso a partir de un ID de recurso.
-     */
-    fun getResourceName(resourceId: Int, context: Context): String {
-        return context.resources.getResourceEntryName(resourceId)
-    }
 
     /**
      * Restablece la contraseña para el usuario con el email proporcionado.

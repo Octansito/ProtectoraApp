@@ -28,7 +28,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Text
 import androidx.compose.ui.unit.sp
-import com.example.protectora.ui.auth.components.CustomButton
 import com.example.protectora.ui.auth.components.TouchableLoginText
 import com.example.protectora.R
 import com.example.protectora.ui.auth.components.CustomSocialButton

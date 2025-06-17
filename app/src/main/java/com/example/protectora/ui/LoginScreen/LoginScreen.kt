@@ -1,4 +1,4 @@
-package com.example.protectora.ui.auth.login
+package com.example.protectora.ui.LoginScreen
 
 import android.annotation.SuppressLint
 import androidx.compose.material3.Switch

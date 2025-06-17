@@ -1,4 +1,4 @@
-package com.example.protectora.ui.PrincipalScreen
+package com.example.protectora.ui.MainScreen
 
 import androidx.lifecycle.ViewModel
 import com.example.protectora.data.repository.Repository

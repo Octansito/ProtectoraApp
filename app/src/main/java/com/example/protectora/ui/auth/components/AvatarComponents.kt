@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.border
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
@@ -40,22 +41,36 @@ fun StaticAvatar(drawableRes: Int,  size: Dp = 200.dp,onClick: () -> Unit) {
 }
 
 @Composable
-fun LottieAvatar(lottieRes: Int, size: Dp = 200.dp ,onClick: () -> Unit) {
+fun LottieAvatar(
+    lottieRes: Int,
+    size: Dp = 200.dp,
+    onClick: () -> Unit
+) {
+    // Obtén la composición de la animación
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(lottieRes))
-    val progress by animateLottieCompositionAsState(composition)
-
+    // Crea el estado de la animación
+    val progress by animateLottieCompositionAsState(
+        composition = composition,
+        iterations = LottieConstants.IterateForever
+    )
+    // Muestra la animación
     Box(
         modifier = Modifier
             .size(size)
             .clip(CircleShape)
             .background(Color.White)
             .border(2.dp, Color.Black, CircleShape)
-            .clickable { onClick() }
+            .clickable { onClick() },
+        contentAlignment = Alignment.Center
     ) {
-        LottieAnimation(
-            composition=composition,
-            progress=progress,
-            modifier = Modifier.fillMaxSize()
-        )
+        composition?.let {
+            LottieAnimation(
+                composition = it,
+                progress = { progress },
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(8.dp) // margen para que no se corte
+            )
+        }
     }
 }
