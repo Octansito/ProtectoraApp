@@ -65,7 +65,7 @@ fun RegisterScreen(viewModel: AuthViewModel, navController: NavController) {
             onClick = { navController.popBackStack() },
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .padding(start = 16.dp, top = 32.dp)  // <-- Aquí controlamos la separación superior
+                .padding(start = 16.dp, top = 32.dp)
         ) {
             Icon(
                 imageVector = Icons.Filled.ArrowBack,

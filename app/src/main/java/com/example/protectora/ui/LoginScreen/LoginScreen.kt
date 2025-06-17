@@ -20,6 +20,7 @@ import androidx.navigation.NavController
 import android.widget.Toast
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -31,6 +32,9 @@ import com.example.protectora.ui.auth.components.PasswordOutlinedTextField
 import com.example.protectora.ui.auth.starup.AuthState
 import com.example.protectora.ui.auth.starup.AuthViewModel
 import com.example.protectora.R
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Icon
 
 
 @Composable
@@ -67,12 +71,26 @@ fun LoginScreen(viewModel: AuthViewModel, navController: NavController) {
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
+
         Image(
             painter = painterResource(id = R.drawable.fondo6),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
+        IconButton(
+            onClick = { navController.popBackStack() },
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(start = 16.dp, top = 32.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Filled.ArrowBack,
+                contentDescription = "Volver",
+                tint = Color.Black
+            )
+        }
+
 
         Column(
             verticalArrangement = Arrangement.Center,
