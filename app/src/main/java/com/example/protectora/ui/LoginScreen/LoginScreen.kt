@@ -36,14 +36,19 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 
-
+/**
+ * Pantalla de inicio de sesión.
+ * @param viewModel Modelo de vista para la autenticación.
+ * @param navController Controlador de navegación para navegar a otras pantallas.
+ *
+ */
 @Composable
 fun LoginScreen(viewModel: AuthViewModel, navController: NavController) {
+    // Estado de la UI
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isResponsible by remember { mutableStateOf(false) }
     var responsibleCode by remember { mutableStateOf("") }
-
     val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsState()
     val customColor = Color(0xFF005A44)
@@ -52,16 +57,23 @@ fun LoginScreen(viewModel: AuthViewModel, navController: NavController) {
     // Manejar navegación o errores según estado
     LaunchedEffect(uiState) {
         when (uiState) {
+            // Manejar diferentes estados de autenticación
             is AuthState.Error -> {
+                // Mostrar mensaje de error
                 val errorState = uiState as? AuthState.Error
                 val message = errorState?.message ?: "Ocurrió un error"
                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
             }
+
             AuthState.ErrorCodigoResponsableInvalido -> {
+                // Mostrar mensaje de error si el código de responsable es inválido
                 Toast.makeText(context, "Código de responsable inválido", Toast.LENGTH_SHORT).show()
             }
+
             AuthState.SuccessResponsable,
+
             AuthState.SuccessUsuario -> {
+                // Navegar a la pantalla principal si el inicio de sesión es exitoso
                 navController.navigate(AppScreens.MainScreen.route) {
                     popUpTo(AppScreens.LoginScreen.route) { inclusive = true }
                 }
@@ -69,15 +81,16 @@ fun LoginScreen(viewModel: AuthViewModel, navController: NavController) {
             else -> {}
         }
     }
-
+// Diseño de la pantalla de inicio de sesión
     Box(modifier = Modifier.fillMaxSize()) {
-
+// Fondo de pantalla
         Image(
             painter = painterResource(id = R.drawable.fondo6),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
+        // Botón de volver
         IconButton(
             onClick = { navController.popBackStack() },
             modifier = Modifier
@@ -91,13 +104,14 @@ fun LoginScreen(viewModel: AuthViewModel, navController: NavController) {
             )
         }
 
-
+// Contenido del formulario
         Column(
             verticalArrangement = Arrangement.Center,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(24.dp)
         ) {
+            // Imagen del logo
             Image(
                 painter = painterResource(id = R.drawable.logo3),
                 contentDescription = "Logo",
@@ -108,7 +122,7 @@ fun LoginScreen(viewModel: AuthViewModel, navController: NavController) {
             )
 
             Spacer(modifier = Modifier.height(24.dp))
-
+// Campos de entrada
             Text("Email", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 20.sp)
             EmailOutlinedTextField(email = email, onEmailChange = { email = it }, customBorderColor = Color.Black)
 
@@ -147,7 +161,7 @@ fun LoginScreen(viewModel: AuthViewModel, navController: NavController) {
             }
 
             Spacer(modifier = Modifier.height(32.dp))
-
+// Botón de inicio de sesión
             Button(
                 onClick = {
                     if (email.isBlank() || password.isBlank()) {
